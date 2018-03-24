@@ -1,0 +1,78 @@
+﻿<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<title>🍋 - TLP Post Generator</title>
+		<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet"> 
+	</head>
+	
+		<!--
+		<style>
+			.outer {
+				position: relative;
+			}
+					
+			#canvas {
+				position:absolute;
+				top: 0px;
+				left: 0px;
+			}
+
+		</style>
+		-->
+
+	<body>
+
+	
+		<textarea cols="40" rows="5" id="inp" maxlength="280"></textarea>
+		<br>
+		<img style='display:none' src="https://i.imgur.com/BGoJmPU.png" crossorigin="anonymous"/>
+		<canvas id="canvas" width="1000" height="400"></canvas>
+ 		
+ 		<!-- <textarea cols="40" rows="5" id="txtContents" maxlength="280" onkeyup="generate();"></textarea>
+
+		<script type="text/javascript">
+				 var canvas=document.getElementById("canvas");
+	       		 var ctx=canvas.getContext("2d");
+	       		 var entry=document.getElementById("txtContents");
+
+	        	function generate(){
+	            	ctx.clearRect(0,0,canvas.width,canvas.height);
+	            	ctx.fillStyle="black";
+	           		ctx.font="30px PT Serif";
+	            	ctx.fillText(entry.value,270,300);
+	            };
+
+		</script> 
+
+
+ 		<div class="outer">
+ 			<img src="https://i.imgur.com/BGoJmPU.png" class="box" id="img">
+ 			<canvas class="box" id="canvas" width="1000" height="400"></canvas>
+
+ 		</div> -->
+
+		<script type="text/javascript">
+			var canvas = document.getElementById('canvas'),
+		        ctx = canvas.getContext('2d');
+				canvas.width = $('img').width();
+				canvas.crossOrigin = "Anonymous";
+				canvas.height = $('img').height();
+				ctx.drawImage($('img').get(0), 0, 0);
+				ctx.font = "40pt PT Serif";
+					
+					$(document).on('input','#inp',function(){
+		    			//redraw image
+		    			ctx.clearRect(0,0,canvas.width,canvas.height);
+		    			ctx.drawImage($('img').get(0), 0, 0);
+		    			//refill text
+
+		    			ctx.fillStyle = "black";
+		    			ctx.fillText($(this).val(),270,300,1000);
+					});	
+		</script>
+
+
+
+	</body>
+</html>
+
