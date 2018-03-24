@@ -1,7 +1,7 @@
-﻿<html>
+<html>
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<title>🍋 TLP Post Generator</title>
+		<title>🍋 - TLP Post Generator</title>
 		<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet"> 
 	</head>
 	
@@ -22,11 +22,10 @@
 
 	<body>
 
-	<h1>This won't work (properly) on Safari. Works fine on Firefox and Chrome.</h1>
 	
 		<textarea cols="40" rows="5" id="inp" maxlength="280"></textarea>
 		<br>
-		<img style='display:none' src="base.png" crossorigin="anonymous"/>
+		<img style='display:none' src="https://i.imgur.com/BGoJmPU.png" crossorigin="anonymous"/>
 		<canvas id="canvas" width="1000" height="400"></canvas>
  		
  		<!-- <textarea cols="40" rows="5" id="txtContents" maxlength="280" onkeyup="generate();"></textarea>
@@ -60,6 +59,7 @@
 				canvas.height = $('img').height();
 				ctx.drawImage($('img').get(0), 0, 0);
 				ctx.font = "40pt PT Serif";
+				ctx.textAlign = "center";
 					
 					$(document).on('input','#inp',function(){
 		    			//redraw image
@@ -68,7 +68,7 @@
 		    			//refill text
 
 		    			ctx.fillStyle = "black";
-		    			ctx.fillText($(this).val(),270,300,1000);
+		    			ctx.fillText($(this).val(),770,300,1000);
 					});	
 		</script>
 
