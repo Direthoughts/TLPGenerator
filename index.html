@@ -12,7 +12,7 @@
 
 <body>
 	<center>
-	Refresh if you're having any problems.<br>
+	Refresh if you're having any problems. May not work properly on Safari; use a different browser.<br>
 	<textarea cols="40" rows="5" id="inp" maxlength="280">Insert text here: (280 char limit)</textarea></center>
 	<br>
 	<center><img id="meme" style="display:none" src="base.png" crossorigin="anonymous"/>
@@ -34,7 +34,7 @@
     $(window).load(function () {
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.drawImage(image.get(0), 0, 0);
-    });
+    
 
     $(document).on("input", "#inp", function () {
         var words = $(this).val().split(" ");
@@ -81,7 +81,10 @@
         if (!recurse) {
             context.fillText(line, x, y);
         }
+	
     }
+	
+	    });
 </script>
 <br>
 <br>
