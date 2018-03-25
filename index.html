@@ -1,79 +1,76 @@
 <html>
-	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<title>🍋 - TLP Post Generator</title>
-		<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet"> 
-	</head>
-	
-		<!--
-		<style>
-			.outer {
-				position: relative;
-			}
-					
-			#canvas {
-				position:absolute;
-				top: 0px;
-				left: 0px;
-			}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <title>🍋 TLP Post Generator</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
+    <style>
+    body {
+    	font-family: PT Serif
+    }
+    </style>
+</head>
+<body>
+	<center><b>Insert text here:</b><br>
+	<textarea cols="40" rows="5" id="inp" maxlength="280"></textarea></center>
+	<br>
+	<center><img id="meme" style="display:none" src="https://i.imgur.com/BGoJmPU.png" crossorigin="anonymous"/>
+	<b>Right click and save:</b>
+	<br>
+	<canvas id="canvas" width="1000" height="400"></canvas></center>
 
-		</style>
-		-->
+	<script type="text/javascript">
+    var canvas = document.getElementById("canvas");
+    var image = $("#meme");
+    canvas.crossOrigin = "Anonymous";
+    canvas.width = image.width();
+    canvas.height = image.height();
 
-	<body>
+    var context = canvas.getContext("2d");
+    context.font = "40pt PT Serif";
+    context.textAlign = "center";
 
-	
-		<textarea cols="40" rows="5" id="inp" maxlength="280"></textarea>
-		<br>
-		<img style='display:none' src="https://i.imgur.com/BGoJmPU.png" crossorigin="anonymous"/>
-		<canvas id="canvas" width="1000" height="400"></canvas>
- 		
- 		<!-- <textarea cols="40" rows="5" id="txtContents" maxlength="280" onkeyup="generate();"></textarea>
+    // draw image when page loads
+    $(window).load(function () {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(image.get(0), 0, 0);
+    });
 
-		<script type="text/javascript">
-				 var canvas=document.getElementById("canvas");
-	       		 var ctx=canvas.getContext("2d");
-	       		 var entry=document.getElementById("txtContents");
+    $(document).on("input", "#inp", function () {
+        // redraw image
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(image.get(0), 0, 0);
+        context.fillStyle = "black";
 
-	        	function generate(){
-	            	ctx.clearRect(0,0,canvas.width,canvas.height);
-	            	ctx.fillStyle="black";
-	           		ctx.font="30px PT Serif";
-	            	ctx.fillText(entry.value,270,300);
-	            };
+        var lineWidth = 970;
+        var lineHeight = 60;
+        var x = 770;
+        var y = 300;
+        var words = $(this).val().split(" ");
+        var line = "";
+        var lineCount = 1;
 
-		</script> 
-
-
- 		<div class="outer">
- 			<img src="https://i.imgur.com/BGoJmPU.png" class="box" id="img">
- 			<canvas class="box" id="canvas" width="1000" height="400"></canvas>
-
- 		</div> -->
-
-		<script type="text/javascript">
-			var canvas = document.getElementById('canvas'),
-		        ctx = canvas.getContext('2d');
-				canvas.width = $('img').width();
-				canvas.crossOrigin = "Anonymous";
-				canvas.height = $('img').height();
-				ctx.drawImage($('img').get(0), 0, 0);
-				ctx.font = "40pt PT Serif";
-				ctx.textAlign = "center";
-					
-					$(document).on('input','#inp',function(){
-		    			//redraw image
-		    			ctx.clearRect(0,0,canvas.width,canvas.height);
-		    			ctx.drawImage($('img').get(0), 0, 0);
-		    			//refill text
-
-		    			ctx.fillStyle = "black";
-		    			ctx.fillText($(this).val(),770,300,1000);
-					});	
-		</script>
-
-
-
-	</body>
+        for (var n = 0; n < words.length; n++) {
+            var testLine = line + words[n] + " ";
+            var metrics = context.measureText(testLine);
+            var testWidth = metrics.width;
+            if (testWidth > lineWidth && n > 0) {
+                // don't wrap if we are on the last line
+                if (lineCount++ > 6) {
+                    break;
+                }
+                context.fillText(line, x, y);
+                line = words[n] + " ";
+                y += lineHeight;
+            }
+            else {
+                line = testLine;
+            }
+        }
+        context.fillText(line, x, y);
+    });
+</script>
+<br>
+<br>
+<center><footer>With thanks to <a href="https://github.com/Splogy">https://github.com/Splogy</a> for helping with the code.</footer></center>
+</body>
 </html>
-
