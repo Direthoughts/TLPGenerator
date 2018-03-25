@@ -14,20 +14,19 @@
 	<center><b>Insert text here: (140 char limit)</b><br>
 	<textarea cols="40" rows="5" id="inp" maxlength="140"></textarea></center>
 	<br>
-	<center><img id="meme" style="display:none" src="https://i.imgur.com/BGoJmPU.png" crossorigin="anonymous"/>
+	<center><img id="meme" style="display:none" src="base.png" crossorigin="anonymous"/>
 	<b>Right click and save:</b>
 	<br>
 	<canvas id="canvas" width="1000" height="400"></canvas></center>
 
 	<script type="text/javascript">
-    var canvas = document.getElementById("canvas");
+      var canvas = document.getElementById("canvas");
     var image = $("#meme");
     canvas.crossOrigin = "Anonymous";
     canvas.width = image.width();
     canvas.height = image.height();
 
     var context = canvas.getContext("2d");
-    context.font = "50pt PT Serif";
     context.textAlign = "center";
 
     // draw image when page loads
@@ -37,16 +36,23 @@
     });
 
     $(document).on("input", "#inp", function () {
+        var words = $(this).val().split(" ");
+        draw(70, words);
+    });
+
+    function draw(fontSize, words) {
         // redraw image
         context.clearRect(0, 0, canvas.width, canvas.height);
         context.drawImage(image.get(0), 0, 0);
         context.fillStyle = "black";
+        context.font = fontSize + "pt PT Serif";
 
-        var lineWidth = 970;
-        var lineHeight = 75;
+        var recurse = false;
+        var lineWidth = 1000;
+        var maxHeight = 380;
+        var lineHeight = fontSize * (4 / 3);
         var x = 770;
-        var y = 350;
-        var words = $(this).val().split(" ");
+        var y = 310;
         var line = "";
         var lineCount = 1;
 
@@ -56,7 +62,11 @@
             var testWidth = metrics.width;
             if (testWidth > lineWidth && n > 0) {
                 // don't wrap if we are on the last line
-                if (lineCount++ > 6) {
+                if (lineCount++ > (maxHeight / lineHeight)) {
+                    if (fontSize > 10) {
+                        draw(fontSize - 10, words);
+                        recurse = true;
+                    }
                     break;
                 }
                 context.fillText(line, x, y);
@@ -67,8 +77,10 @@
                 line = testLine;
             }
         }
-        context.fillText(line, x, y);
-    });
+        if (!recurse) {
+            context.fillText(line, x, y);
+        }
+    }
 </script>
 <br>
 <br>
